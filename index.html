@@ -1,28 +1,46 @@
 <!DOCTYPE html>
 <html>
-	<head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
-		<title></title>
-		<script src="./page.js"></script>
-		<script>
-		var appRouter = new JV.Router({
-			routes:{
-				123:123,
-				234:234
-			},
-			123:function(){
-				history.pushState({a:1},"123","/123");
-			},
-			234:function(){
-				alert('234');
-			}
-		});
-		appRouter.start();
-		</script>
-	</head>
-	<body>
-		<input type="button" value="123" onclick="location.href='#123'"/>
-		<input type="button" value="234" onclick="location.href='#234'"/>
-	</body>
+<head>
+<title></title>
+<script src="page.js"></script>
+<script>
+var router = new JV.Router({
+	routes:{
+		"index/:id":"index",
+		"page/p:id":"page",
+		"skupage/:id/:page":"skupage",
+		"detail":"detail",
+		"cart/*action":"cart",
+		"*action":"action"
+	},
+	page:function(id){
+		console.log('page'+id);
+	},
+	cart:function(){
+		console.log('cart');
+	},
+	index:function(){
+		console.log('index');
+	},
+	detail:function(){
+		console.log('detail');
+	},
+	skupage:function(id,page){
+		console.log('skupage id'+id+" page"+page);
+	},
+	action:function(){
+		console.log('action');
+	}
+});
+router.start();
+</script>
+</head>
+<body>
+	<input type="button" value="index" onclick="location.href='#index/10'"/>
+	<input type="button" value="page" onclick="location.href='#page/p11'"/>
+	<input type="button" value="skupage" onclick="location.href='#skupage/100/101?v=1'"/>
+	<input type="button" value="detail" onclick="location.href='#detail'"/>
+	<input type="button" value="cart" onclick="location.href='#cart/200'"/>
+	<input type="button" value="else" onclick="location.href='#else'"/>
+</body>
 </html>
