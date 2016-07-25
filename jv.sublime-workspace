@@ -1,0 +1,493 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"bor",
+				"border-right"
+			],
+			[
+				"mar",
+				"margin-bottom"
+			],
+			[
+				"in",
+				"inline-block"
+			],
+			[
+				"di",
+				"display"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"cli",
+				"clientWidth"
+			],
+			[
+				"ba",
+				"background"
+			],
+			[
+				"backgr",
+				"background-color"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "index.html",
+			"settings":
+			{
+				"buffer_size": 647,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "page.js",
+			"settings":
+			{
+				"buffer_size": 1048,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "jv.sublime-project",
+			"settings":
+			{
+				"buffer_size": 71,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "backbone.js",
+			"settings":
+			{
+				"buffer_size": 73442,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "jv.sublime-workspace",
+			"settings":
+			{
+				"buffer_size": 5353,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/aaa/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/Wechat/1.2/434f654fdcfdbdfd76ef63778c52a2b3/Message/MessageTemp/7ca14c59d6fdb8cf36db5961fe71581b/OpenData/7.js",
+		"/Users/aaa/Downloads/2.0.1_main.js",
+		"/Users/aaa/Documents/work/src/main/webapp/WEB-INF/views/jingxuan/cx_bangdan.jsp",
+		"/Users/aaa/Documents/work/src/main/webapp/content/promotion/js/cx_bangdan.js",
+		"/Users/aaa/Documents/work/src/main/webapp/WEB-INF/views/jingxuan/cx_qingdan.jsp",
+		"/Users/aaa/Documents/work/src/main/webapp/content/promotion/js/cx_qingdan.js",
+		"/Users/aaa/Documents/work/src/main/webapp/WEB-INF/views/jingxuan/cx20.jsp",
+		"/usr/local/lib/node_modules/tmodjs/README.md",
+		"/Users/aaa/jvWeb/source/website/src/main/webapp/node_modules/gulp-tmod/index.js",
+		"/Users/aaa/jvWeb/.gitignore",
+		"/Users/aaa/Desktop/H5/bak.html",
+		"/Users/aaa/Desktop/H5/bak1.html",
+		"/Users/aaa/jvWeb/source/static/dadishu/index.html",
+		"/Users/aaa/Documents/lab/angular/app/partials/phone-detail.html",
+		"/Users/aaa/Documents/lab/angular/app/phones/phones.json",
+		"/Users/aaa/Documents/lab/angular/app/js/controllers.js",
+		"/Users/aaa/Documents/lab/angular/app/js/app.js",
+		"/Users/aaa/Documents/lab/angular/app/index.html",
+		"/Users/aaa/Documents/workspace/jv-wish-h5/src/main/webapp/WEB-INF/views/error.jsp",
+		"/Users/aaa/Documents/workspace/jv-wish-h5/src/main/webapp/WEB-INF/views/header.jsp"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"escapeRegExp",
+			"splatParam",
+			"namedParam",
+			"optionalParam",
+			"Router",
+			"jockey",
+			"Jockey",
+			"jockey",
+			"getBasePath",
+			"appId",
+			"{position:fixed;bottom:3.3rem;left:1.2rem;width:2rem;height:2rem;border-radius:100%;background:rgba(0,0,0,.6);z-index:9}",
+			"appId",
+			"jockey",
+			"meishijia",
+			"Jockey",
+			"jockey",
+			"jokey",
+			"getQueryString",
+			"channelApk",
+			"channel",
+			"sign",
+			"src",
+			"toutiaobj",
+			"init",
+			"dialog-list-ct",
+			" ",
+			"getOrderNum",
+			"display_content",
+			"IntervalOrderNum",
+			"lastpercent",
+			"				\n",
+			";\n",
+			"	\n",
+			"fridayStock",
+			"bottom_in",
+			"buyImg",
+			"fridayStock",
+			"friday",
+			"buyImg",
+			"test",
+			";\n",
+			"				\n",
+			"itemDom",
+			"replace",
+			"luodi.share",
+			"share",
+			"render",
+			"convertMS",
+			"last_time",
+			"					\n",
+			"		\n",
+			"()\n",
+			"-1",
+			"i",
+			"$value\n",
+			"		\n",
+			")\n",
+			"stdout",
+			"log",
+			"log(",
+			"this.log",
+			"watch",
+			"log",
+			"stdout",
+			"exec",
+			"watch",
+			"_compile",
+			"_combo",
+			"_buildRuntime",
+			"combo",
+			"_combo",
+			"_compile",
+			"compile",
+			"_cache",
+			"_getCache",
+			"_combo",
+			"combo",
+			"_combo",
+			"combo",
+			"gulp",
+			"loadCount",
+			"load-btn",
+			"		\n",
+			"150",
+			";}\n",
+			"	\n",
+			"getState",
+			">\n",
+			"extend",
+			"opt",
+			"combo",
+			"wishfile",
+			"div",
+			">\n",
+			"hahahha哈哈哈哈哈",
+			"float:left;display: block;margin-top:.6rem;}\n",
+			"updata",
+			"updataFood",
+			"		\n",
+			"Tank html5 - by 06wj_files",
+			"Tank\n",
+			"Tank html5 - by 06wj_files\n",
+			"./Tank html5 - by 06wj_files/\n",
+			"Tank html5 - by 06wj_files/\n",
+			"./Tank html5 - by 06wj_files/\n",
+			">\n",
+			"(?<=<img .*\").*(?=\\\\=)",
+			"(?<=<img .*\")src(?=\\\\=)",
+			"(?<=<img .*\")src(?=\")",
+			"(?<=<img .*\")src(?=\\=)",
+			"img.*(src)",
+			"img*(src)",
+			"img",
+			"../content/whackmouse/\n",
+			"        \n",
+			"itemimg",
+			".line",
+			"line",
+			"zhuanti.select",
+			"menuproduct",
+			"(){\n",
+			"setItemFontSetting",
+			"txtfont",
+			"loadCount",
+			"_czc",
+			"80",
+			"menuselected",
+			"menu"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"sku",
+			"js",
+			"./js/",
+			"src1",
+			"./"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": false
+	},
+	"groups":
+	[
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "index.html",
+					"settings":
+					{
+						"buffer_size": 647,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								347,
+								347
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "page.js",
+					"settings":
+					{
+						"buffer_size": 1048,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								580,
+								580
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "jv.sublime-project",
+					"settings":
+					{
+						"buffer_size": 71,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "backbone.js",
+					"settings":
+					{
+						"buffer_size": 73442,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								55934,
+								55934
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 32719.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "jv.sublime-workspace",
+					"settings":
+					{
+						"buffer_size": 5353,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 70.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 192.0,
+	"status_bar_visible": true
+}
