@@ -43,7 +43,7 @@
 			"file": "index.html",
 			"settings":
 			{
-				"buffer_size": 647,
+				"buffer_size": 1101,
 				"line_ending": "Unix"
 			}
 		},
@@ -51,7 +51,7 @@
 			"file": "page.js",
 			"settings":
 			{
-				"buffer_size": 1048,
+				"buffer_size": 2234,
 				"line_ending": "Unix"
 			}
 		},
@@ -75,7 +75,34 @@
 			"file": "jv.sublime-workspace",
 			"settings":
 			{
-				"buffer_size": 5353,
+				"buffer_size": 8274,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "//正式需通过java获取服务器时间\nvar now_data = new Date().getTime();\nnow_date = now_data;\nvar json = null;\nvar bottombarid='';//底部栏的id\nfunction notmove(e){\n	e.preventDefault();\n	e.stopPropagation();\n}\nfunction getActid(){\n	return meishijia.getQueryString(\"activityid\");\n}\nfunction getJvid(){\n	return meishijia.getQueryString(\"jvid\");\n}\nfunction setTemplate(){\n	 template.helper('toTimeStyle', function (str) {\n		   return meishijia.date.toTimeStyle(str);\n	 });\n}\n$(function() {\n	meishijia.tj.init();\n	//如果不是专题 就等比缩放 大促另外有等比缩放\n	document.querySelector(\"html\").setAttribute(\"style\", \"font-size:\" + (document.body.clientWidth / 20) + \"px\");\n	if ($(\"html\").width() > 800) {\n		document.querySelector(\"html\").setAttribute(\"style\", \"font-size:\" + \"20px\");\n	}\n});\nvar activityid=null;\nvar islogin=null;\n//app调用H5\nfunction AppH5Init(activityid_param,islogin_param) {\n	//商品展示方法\n	activityid = activityid_param;\n	islogin = islogin_param;\n	meishiapp.call_api('/activity/act?activityid='+activityid+'&unstart=1', 'h5Init');\n}\n\nvar h5Init = function(datastr) {\n	var data = decodeToJSON(datastr);\n	//兼容处理\n	var json = data;\n	if (data.data && data.data.title) {\n		document.title = data.data.title;\n	}\n	//渲染的页面\n	cxSl.init(json);\n	meishijia.tj.event(\"cx_shuanglie.jsp_\" + activityid, \"cx_shuanglie.jsp_\" + activityid);\n	var shareState =data.data.share;\n	var fState =data.data.f;\n	var cState =data.data.c;\n    var showBtn={\"shareBtn\":shareState,\"fBtn\":fState,\"cBtn\":cState};\n    var trueItems = [];\n    var falseNum = 0;\n    for(var i in showBtn){\n        var c = showBtn[i];\n        if(c == false){\n            falseNum++;\n        }\n        if(c == true){\n            trueItems.push(i);\n        }\n    }\n    if(falseNum <3){\n        $(\"#bottom2\").show();\n    }\n    if(falseNum == 0){\n		$(\"#bottom2\").find(\"span\").show();\n    }\n    else if(falseNum == 2){\n        $(\"#bottom2\").hide();\n        $(\"#\"+trueItems[0]).show();\n    }\n    else if(falseNum == 1){\n        var trueBtn = $(\"#\"+trueItems[0]+\"d,#\"+trueItems[1]+\"d\");\n        console.log(trueItems);\n        trueBtn.show().css(\"width\",\"50%\");\n    }\n\n	//分享\n	if(shareState){\n		cxSl.setShareData(activityid);\n		$(\".shareBtn\").tap(function(){\n			meishijia.appshare();\n		});\n	}\n\n	//收藏\n	if(fState){\n		if(islogin){\n			cxSl.exist();\n		}\n		$(\".fBtn\").tap(function(){\n			if(!islogin){\n				location.href='jwish://j.w?act=login';\n				return;\n			}\n			var flag=$(this).find(\"a\").text();\n\n			if(flag==\"收藏\"){\n				cxSl.addFavorite();\n			}\n			else if(flag==\"取消收藏\"){\n				cxSl.cancelFavorite();\n			}\n			meishijia.tj.event(\"点击收藏按钮\",\"点击收藏按钮\");\n		});\n	}\n	//评价\n	if(cState){\n		setTemplate();\n		cxSl.initComment();\n	}\n	//按钮优化\n	$(\"#bottom2,#bottom3\").width($(document.body).width());\n}\n\nvar cxSl = {\n	json: \"\",\n	pageindex:1,\n	init: function(json) {\n		var _this = this;\n		_this.json = json;\n		// 此判断条件 只是根据是否在当前时间段内\n		for (var i = 0; i < cxSl.json.data.products.length; i++) {\n			var product = cxSl.json.data.products[i];\n			var promotion = product.product_promotion;\n			product.show_tip = true;\n			product.can_buy = true;\n			// 处理未开始\n			if (product.valid == 0) {\n				product.state = \"nostock\"; // 无库存\n				product.tip = \"当前区域已售完\";\n				product.can_buy = false;\n			} else if (promotion) {\n				if (promotion.residue_time <= 0 || promotion.overplusCount <= 0) {\n					product.state = \"end\"; // 结束\n					product.tip = \"折扣已抢光\";\n					product.can_buy = false;\n				} else if (parseInt(promotion.promotion_start_time) - now_date > 0) {\n					// 未开始\n					product.state = \"nostart\"; // 未开始\n					product.tip = \"促销尚未开始\";\n					product.can_buy = false;\n					//product.start_time = parseInt(promotion.promotion_start_time) -now_date;\n				} else if (promotion.promotion_end_time == -1) {\n					product.show_tip = false;\n\n				} else if (parseInt(promotion.promotion_start_time) < now_date && parseInt(promotion.promotion_end_time) > now_date) {\n					// 正行中\n					product.state = \"started\"; // 开始\n					product.show_tip = false;\n					//product.tip = bangdan.convertMSjs(promotion.residue_time);\n							/*if(promotion.show_residue_time==false){\n								product.show_tip = false;\n							}*/\n				} else {\n					product.show_tip = false;\n				}\n\n			} else {\n				// 有库存、没有促销\n				product.state = \"normal\";\n				product.show_tip = false;\n			}\n		} //end for\n\n		console.log(this.json);\n		this.price();\n		this.render(this.json.data);\n		this.clickEvent();\n		cxSl.clickProductImg();\n		cxSl.addCart();\n		cxSl.setShareData();\n	},\n	render: function(json) {\n		var html = template('script_item', json);\n		$(\"#div-item\").html(html);\n		$(\".itempic\").lazyload({\n                threshold : 200\n        });\n	},\n	//处理价格\n	price: function(price) {\n		template.helper('toPrice', function(price) {\n			return meishijia.utils.toPrice(price, false);\n		});\n	},\n	//点击事件\n	clickEvent: function() {\n		//litab的选项卡\n		$(\"#tab-ul li\").click(function() {\n			var index = $(this).index();\n			$(this).addClass(\"hover\").siblings(\"li\").removeClass(\"hover\");\n			$('.con-tab').eq(index).show().siblings(\".con-tab\").hide();\n\n		})\n	}\n\n}\n//加入购物车\ncxSl.addCart = function() {\n		$(\"#div-item\").on(\"click\", \".buy\", function() {\n	    if(!islogin){\n			location.href='jwish://j.w?act=login';\n			return;\n		}\n			if ($(this).attr(\"valid\") == 0) return;\n			var sku = $(this).parents(\".item\").attr(\"sku\");\n			// 判断是客户端调用\n			meishijia.app.addCart(sku);\n			meishijia.tj.event(\"加入购物车\" + activityid, \"加入购物车\" + activityid);\n		})\n	}\n\n	// 点击图片查看详情\n	cxSl.clickProductImg = function() {\n		$(\"#div-item\").on(\"click\", \".mask-font,h2,dt,.itempic\", function() {\n			var sku = $(this).parents(\".item\").attr(\"sku\");\n			location.href = \"jwish://j.w?act=product&sku=\" + sku;\n			meishijia.tj.event(sku+\"进入商品详情\"+activityid, sku+\"进入商品详情\"+activityid);\n		})\n	}\n	//分享按钮内容设置\n	cxSl.setShareData = function(act) {\n		var json = cxSl.json;\n		// 设置分享内容\n		var sharetitle = json.data.share_title;\n		var sharecontent = json.data.share_desc;\n		var shareimg = json.data.share_image;\n		var shareurl = \"https://meishiapp.jd.com/share/activity/fooddetail?activityid=\"+act;\n		var isShare = json.data.share;\n		meishijia.setShareData(\n				sharetitle,\n				sharecontent,\n				shareimg,\n				shareurl,\n				isShare);\n		console.log(\"分享地址：\"+shareurl);\n	}\n	cxSl.initComment = function(){\n		$(\".cx_comment\").show();\n		callback = function(comments){\n			if(comments.length==0){\n				$(\"#zwpl\").text(\"暂无评论\");\n				$(\"#zwpl\").show();\n				$(\"#morepl\").hide();\n			};\n		}\n		cxSl.getComment();\n\n		$(\"#morepl\").tap(function(){\n			cxSl.getComment();\n		});\n\n		$(\".cBtn\").tap(cxSl.showCommentBiz);\n		$(\"#plsubmit_submit\").tap(cxSl.submitComment);\n		$(\"#plsubmit_cancel\").tap(cxSl.closeSubmitBox);\n		$(\"#mask\").tap(cxSl.closeSubmitBox);\n	}\n\n	//写评论页面\n	cxSl.showCommentBiz = function(){\n		meishijia.tj.event(\"点击评论按钮\",\"点击评论按钮\" + meishijia.utils.cutUrl(location.href));\n		if(!islogin){\n			location.href='jwish://j.w?act=login';\n			return;\n		}\n		cxSl.showSubmitBox();\n	}\n\n	//写评论页面事件\n	var scrollTop=0;\n	cxSl.showSubmitBox = function(){\n		scrollTop = document.body.scrollTop;\n		var height = document.documentElement.clientHeight;\n		$(\"#plsubmit\").show().css({\"height\":height});\n		//$(\"#plsubmit\").css({\"position\":\"absolute\",\"top\":0,\"bottom\":0});\n		document.body.addEventListener(\"touchmove\",notmove,false);\n		$(\"#mask\").show();\n		if(bottombarid){\n			$(\"#\"+bottombarid).hide();\n		}\n		$(\"#comment_content\").focus();\n	}\n\n	//提交评论\n	function submitCommentData(datastr){\n		var json = decodeToJSON(datastr);\n		if(meishijia.checkresp(json)){\n			$(\"#commentbag\").html(\"\");\n			cxSl.pageindex=1;\n			cxSl.getComment();\n			meishijia.toast(\"提交成功\");\n			$(\"#comment_content\").val(\"\");\n			cxSl.closeSubmitBox();\n		}\n	}\n	cxSl.submitComment = function(){\n		var comment_content = $(\"#comment_content\").val();\n		if(!comment_content){\n			meishijia.toast(\"评论不能为空\");\n			return;\n		}\n\n		if(comment_content.length>240){\n			meishijia.toast(\"字数超限，最多240个字\");\n			return;\n		}\n\n		var pvalue = encodeURIComponent('{\"jv_act_id\":'+activityid+',\"comment_content\":\"'+ encodeURIComponent(comment_content)+'\"}');\n		meishiapp.call_api('/comment/activityComment?operate_code=1&operate_value='+pvalue, 'submitCommentData');\n	}\n\n	//关闭评论页\n	cxSl.closeSubmitBox = function (e){\n		// e = e || window.event;\n		// alert(22)\n		// e.preventDefault();\n		$(\"#mask\").hide();\n		$(\"#plsubmit\").hide();\n		$(\"#plsubmit\").find(\"textarea\").blur();\n		document.body.scrollTop=scrollTop;\n		document.body.removeEventListener(\"touchmove\",notmove,false);\n		setTimeout(function(){\n			if(bottombarid){\n				$(\"#\"+bottombarid).show();\n			}\n		},1);\n\n	}\n\n	var pagesize=5;\n	var callback=null;\n	//获取评论\n	function getCommentData(datastr) {\n		var json = decodeToJSON(datastr);\n		if(meishijia.checkresp(json)){\n			var comments = json.data.comments;\n			if(comments.length==0){\n				$(\"#morepl\").hide();\n				$(\".see-more\").text(\"没有更多了\").show();\n			}\n			else{\n				if(comments.length==pagesize){\n					$(\"#morepl\").show();\n					$(\"#zwpl\").hide();\n				}\n				else{\n					$(\"#zwpl\").text(\"没有更多了\").show();\n					$(\"#morepl\").hide();\n				}\n				cxSl.pageindex++;\n				var html = template('tpl_comment', comments);\n				console.log(comments);\n				$(\"#commentbag\").append(html);\n			}\n			if(callback){\n				callback(comments);\n			}\n		}\n\n	}\n	cxSl.getComment = function (){\n		var pvalue = encodeURIComponent('{\"jv_act_id\":'+activityid+',\"page_num\":'+cxSl.pageindex+',\"page_size\":'+pagesize+'}');\n		meishiapp.call_api('/comment/activityComment?operate_code=9&operate_value='+pvalue, 'getCommentData');\n	}\n	\n	//收藏回调\n	function addFavoriteData(datastr){\n		var json = decodeToJSON(datastr);\n		if(meishijia.checkresp(json)){\n			meishijia.toast(\"收藏成功\",1500);\n		}\n		cxSl.exist();\n		console.log(activityid);\n	}\n	//添加收藏\n	cxSl.addFavorite = function(){\n		meishiapp.call_api('/favorite/add?type=1&id='+activityid,'addFavoriteData');\n	}\n	//取消收藏回调\n	function cancelFavoriteData (datastr){\n		var json = decodeToJSON(datastr);\n		if(meishijia.checkresp(json)){\n			meishijia.toast(\"取消收藏成功\",1500);\n		}\n		cxSl.exist();\n	}\n	cxSl.cancelFavorite = function (){\n		meishiapp.call_api('/favorite/cancel?id='+activityid+'&type=1','cancelFavoriteData');\n	}\n	//根据是否收藏 操作底部栏\n    function existData(datastr){\n        var json =  decodeToJSON(datastr);\n        if(meishijia.checkresp(json,false)){\n            var exist = json.data.exist;\n            console.log(\"收藏状态:\"+exist);\n            if(exist){\n                $(\".fBtn\").find(\"a\").text(\"取消收藏\");\n                $(\".sharebottom\").find(\".fBtn img\").attr(\"class\",\"qxscimg\");\n                $(\".oneBtn\").find(\".fBtn img\").attr(\"src\",\"./images/like_liked.png\");\n                $(\".sharebottom\").find(\".fBtn img\").attr(\"src\",\"./images/detail_like_liked@2x.png\");\n            }\n            else{\n                $(\".fBtn\").find(\"a\").text(\"收藏\");\n                $(\".sharebottom\").find(\".fBtn img\").removeAttr(\"class\",\"qxscimg\");\n                $(\".oneBtn\").find(\".fBtn img\").attr(\"src\",\"./images/like_normal.png\");\n                $(\".sharebottom\").find(\".fBtn img\").attr(\"src\",\"./images/detail_like_normal@2x.png\");\n            }\n        }\n    }\n    \n    function decodeToJSON(str){\n    	try{\n    		str = Base64.decode(str);\n        	return JSON.parse(str);\n    	}\n    	catch(e){\n    		//alert(e);\n    	}\n    }\n\n	cxSl.exist = function(){\n        meishiapp.call_api('/favorite/exist?id='+activityid+'&type=1','existData');\n        $(\"#bottom2\").show();\n        bottombarid=\"bottom2\";\n    }\n",
+			"file": "/Users/aaa/Documents/work/src/main/webapp/content/app/h5_v7/js/cx_shuanglie.js",
+			"file_size": 12332,
+			"file_write_time": 1469431869000000,
+			"settings":
+			{
+				"buffer_size": 11234,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/Users/aaa/Documents/work/src/main/webapp/content/app/h5_v7/cx_shuanglie.html",
+			"settings":
+			{
+				"buffer_size": 12683,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/Users/aaa/Documents/work/src/main/webapp/content/app/h5_v7/js/base64.min.js",
+			"settings":
+			{
+				"buffer_size": 3814,
 				"line_ending": "Unix"
 			}
 		}
@@ -104,6 +131,7 @@
 	},
 	"file_history":
 	[
+		"/Users/aaa/Documents/work/src/main/webapp/content/app/h5_v7/js/base64.min.js",
 		"/Users/aaa/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/Wechat/1.2/434f654fdcfdbdfd76ef63778c52a2b3/Message/MessageTemp/7ca14c59d6fdb8cf36db5961fe71581b/OpenData/7.js",
 		"/Users/aaa/Downloads/2.0.1_main.js",
 		"/Users/aaa/Documents/work/src/main/webapp/WEB-INF/views/jingxuan/cx_bangdan.jsp",
@@ -142,6 +170,11 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"json",
+			"fState",
+			"cxSl.init",
+			"init",
+			"decodeToJSON",
 			"escapeRegExp",
 			"splatParam",
 			"namedParam",
@@ -264,12 +297,7 @@
 			"menuproduct",
 			"(){\n",
 			"setItemFontSetting",
-			"txtfont",
-			"loadCount",
-			"_czc",
-			"80",
-			"menuselected",
-			"menu"
+			"txtfont"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -292,7 +320,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 5,
 			"sheets":
 			[
 				{
@@ -300,15 +328,15 @@
 					"file": "index.html",
 					"settings":
 					{
-						"buffer_size": 647,
+						"buffer_size": 1101,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								347,
-								347
+								0,
+								0
 							]
 						],
 						"settings":
@@ -327,15 +355,15 @@
 					"file": "page.js",
 					"settings":
 					{
-						"buffer_size": 1048,
+						"buffer_size": 2234,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								580,
-								580
+								1545,
+								1545
 							]
 						],
 						"settings":
@@ -386,8 +414,8 @@
 						"selection":
 						[
 							[
-								55934,
-								55934
+								55990,
+								55990
 							]
 						],
 						"settings":
@@ -397,7 +425,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 32719.0,
+						"translation.y": 27307.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -407,7 +435,7 @@
 					"file": "jv.sublime-workspace",
 					"settings":
 					{
-						"buffer_size": 5353,
+						"buffer_size": 8274,
 						"regions":
 						{
 						},
@@ -422,6 +450,85 @@
 						{
 							"syntax": "Packages/Text/Plain text.tmLanguage",
 							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/Users/aaa/Documents/work/src/main/webapp/content/app/h5_v7/js/cx_shuanglie.js",
+					"settings":
+					{
+						"buffer_size": 11234,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								11024,
+								11024
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 8736.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "/Users/aaa/Documents/work/src/main/webapp/content/app/h5_v7/cx_shuanglie.html",
+					"settings":
+					{
+						"buffer_size": 12683,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								8811,
+								8811
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 4581.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "/Users/aaa/Documents/work/src/main/webapp/content/app/h5_v7/js/base64.min.js",
+					"settings":
+					{
+						"buffer_size": 3814,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,

@@ -29,11 +29,7 @@
 					}
 				}
 			}
-			console.log(this.routerArr);
-			
-			setInterval(function(){
-				_checkHash(_this);
-			},100);
+			_checkHash(_this);
 			window.onhashchange = function(){
 				_checkHash(_this);
 			}
