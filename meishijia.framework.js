@@ -51,7 +51,7 @@
 	
     var _checkHash = function(router){
 		var hash = location.hash;
-		if(hash && hash.length>1 && hash != router.currentHash){
+		if(hash && hash.length > 1 && hash != router.currentHash){
 			router.currentHash = hash;
 			hash = hash.substring(1);
 			var routerArr = router.routerArr;
@@ -61,7 +61,9 @@
 				var pageName = routerArr[i].pageName;
 				matchs = reg.exec(hash);
 				if(matchs){
+					//从hash中获取参数
 					var args = matchs.slice(1);
+					//页面对象
 					var currentPage = meishijia.page[pageName];
 					if(currentPage){
 						if(typeof currentPage[init] === "function"){
@@ -69,7 +71,7 @@
 						}
 						else{
 							//销毁上一个页面后 执行当前页面init方法
-							if(meishijia.page._previous 
+							if(meishijia.page._previous
 								&& typeof meishijia.page._previous['dispose'] === "function"){
 								meishijia.page._previous['dispose'].call(meishijia.page._previous);
 							}
