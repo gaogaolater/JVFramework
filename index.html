@@ -2,22 +2,121 @@
 <html>
 <head>
 <title></title>
+<meta content="text/html;charset=utf-8" http-equiv="content-type" />
+<style>
+h1{height:200px;border:1px solid gray;}
+</style>
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+<script src="meishijia.framework.js"></script>
 <script>
-var a={
-	name:'gaogao',
-	sex:1,
-	hobby:['code','computer','pingpang'],
-	say:function(){
-		alert('haha');
+meishijia.view.index = new meishijia.page({
+	init:function(){
+		this.name = 'index';
+		console.log('init');
+		this.render();
+	},
+	render:function(){
+		console.log('render');
+		$("#page").html("<h1>Index</h1><h1>Index</h1><h1>Index</h1><h1>Index</h1><h1>Index</h1><h1>Index</h1>");
+		this.bindEvent();
+	},
+	bindEvent:function(){
+		console.log('bindEvent');
+		$("h1").click(function(){
+			console.log('h1');
+		});
+	},
+	resume:function(){
+		console.log('resume');
+	},
+	dispose:function(){
+		console.log('dispose');
 	}
-};
-alert(JSON.stringify(a));
-console.log(JSON.stringify(a));
+});
+
+meishijia.view.list = new meishijia.page({
+	init:function(){
+		this.name = 'list';
+		console.log('init');
+		this.render();
+	},
+	render:function(){
+		console.log('render');
+		$("#page").html("<h1>list</h1><h1>list</h1><h1>list</h1><h1>list</h1><h1>list</h1><h1>list</h1>");
+		this.bindEvent();
+	},
+	bindEvent:function(){
+		console.log('bindEvent');
+		$("h1").click(function(){
+			console.log('h1');
+		});
+	},
+	resume:function(){
+		console.log('resume');
+	},
+	dispose:function(){
+		console.log('dispose');
+	}
+});
+
+meishijia.view.detail = new meishijia.page({
+	init:function(){
+		this.name = 'detail';
+		console.log('init');
+		this.render();
+	},
+	render:function(){
+		console.log('render');
+		$("#page").html("<h1>detail</h1><h1>detail</h1><h1>detail</h1><h1>detail</h1><h1>detail</h1>");
+		this.bindEvent();
+	},
+	bindEvent:function(){
+		console.log('bindEvent');
+		$("h1").click(function(){
+			console.log('h1');
+		});
+	},
+	resume:function(){
+		console.log('resume');
+	},
+	dispose:function(){
+		console.log('dispose');
+	}
+});
+
+$(function(){
+	/*
+	$("#index").click(function(){
+		location.href="#index?_t="+(+new Date);
+	});
+	$("#list").click(function(){
+		location.href="#list?_t="+(+new Date);
+	});
+	$("#detail").click(function(){
+		location.href="#detail?_t="+(+new Date);
+	});
+	*/
+
+	var router = new meishijia.router({
+		routes:{
+			"index":"index",
+			"list":"list",
+			"detail":"detail",
+			"*action":"action"
+		}
+	});
+	router.start();
+});
 </script>
 </head>
 <body>
-	<input type="button" value="index" onclick="location.href='#index/10'"/>
-	<input type="button" value="page" onclick="location.href='#page/p11'"/>
-	<input type="button" value="else" onclick="location.href='#else'"/>
+	<div style="width:100%;height:30px;position:fixed;top:0;">
+		<button onclick="javascript:location.href='#index'" id="index">index</button>
+		<button onclick="javascript:location.href='#list'" id="list">list</button>
+		<button onclick="javascript:location.href='#detail'" id="detail">detail</button>
+	</div>
+	<div id="page">
+		
+	</div>
 </body>
 </html>

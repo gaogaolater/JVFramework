@@ -2,8 +2,7 @@
 ;(function(){
 	if(typeof meishijia === "undefined") meishijia={};
 	if(typeof meishijia.db === "undefined") meishijia.db={};
-	if(typeof meishijia.view === "undefined") meishijia.page={};
-
+	if(typeof meishijia.view === "undefined") meishijia.view={};
 
 	//需要渲染的div的id
 	meishijia.view.renderId = "page";
@@ -24,32 +23,56 @@
 		renderDom.html(html);
 	};
 
+	/*
+	//cache的格式
 	meishijia.page.cache = {
 		html:'',
 		disposeTime:'',
-		scrollTop:0
+		scrollTop:0,
+		instance:{}
 	}
+	*/
 
 	meishijia.page = function(opt){
 		_extend(this,opt);
+		this._cache = null;
+		this._cacheKey = "";
 		//调度器调用base方法
-		this.baseInit = function(timestamp){
+		this._baseInit = function(){
+			console.log(this);
+			this._cacheKey = location.hash || location.href;
 			//检查是否有缓存
-			if(sessionStorage[timestamp]){
-				this.baseResume();
+			this._cache = sessionStorage[this._cacheKey];
+			if(this._cache){
+				this._cache = JSON.parse(this._cache);
+				this._cache.instance = JSON.parse(this._cache.instance);
+				this._baseResume();
 			}
 			else{
 				this.init();
 			}
 		}
-		this.baseResume = function(){
+		this._baseResume = function(){
 			//恢复
-			this.resume();
+			var cache = this._cache;
+			$("#"+meishijia.view.renderId).html(cache.html);
+			$("body").scrollTop(cache.scrollTop);
+			//还原各个属性
+			for(var key in cache.instance){
+				this[key] = cache.instance[key];
+			}
+			this.resume(cache.disposeTime);
 			this.bindEvent();
 		}
-		this.baseDispose = function(){
+		this._baseDispose = function(){
 			//添加或更新缓存
-
+			var cache = {
+				html:$("#"+meishijia.view.renderId).html(),
+				disposeTime:+new Date,
+				scrollTop:$("body").scrollTop(),
+				instance:JSON.stringify(this)
+			}
+			sessionStorage[this._cacheKey] = JSON.stringify(cache);
 			this.dispose();
 		}
 	}
@@ -97,18 +120,18 @@
 					//从hash中获取参数
 					var args = matchs.slice(1);
 					//页面对象
-					var currentPage = meishijia.page[pageName];
+					var currentPage = meishijia.view[pageName];
 					if(currentPage){
-						if(typeof currentPage['init'] === "function"){
+						if(typeof currentPage['_baseInit'] !== "function"){
 							console.log(pageName+' not have init method');
 						}
 						else{
 							//销毁上一个页面后 执行当前页面init方法
 							if(meishijia.page._previous
-								&& typeof meishijia.page._previous['dispose'] === "function"){
-								meishijia.page._previous['dispose'].call(meishijia.page._previous);
+								&& typeof meishijia.page._previous['_baseDispose'] === "function"){
+								meishijia.page._previous['_baseDispose'].call(meishijia.page._previous);
 							}
-							currentPage['init'].apply(currentPage,args);
+							currentPage['_baseInit'].apply(currentPage,args);
 							meishijia.page._previous = currentPage;
 						}
 					}
@@ -145,4 +168,14 @@
     		self[item] = sup[item];
     	}
     }
+
+    var _getParam = function(name) {
+		var hash = location.hash.substr(location.hash.indexOf('?'))
+		var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+		var r = hash.substr(1).match(reg);
+		if (r != null) {
+			return unescape(r[2]);
+		}
+		return "";
+	}
 })();
