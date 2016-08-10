@@ -2,45 +2,22 @@
 <html>
 <head>
 <title></title>
-<script src="page.js"></script>
 <script>
-var router = new JV.Router({
-	routes:{
-		"index/:id":"index",
-		"page/p:id":"page",
-		"skupage/:id/:page":"skupage",
-		"detail":"detail",
-		"cart/*action":"cart",
-		"*action":"action"
-	},
-	page:function(id){
-		console.log('page'+id);
-	},
-	cart:function(){
-		console.log('cart');
-	},
-	index:function(){
-		console.log('index');
-	},
-	detail:function(){
-		console.log('detail');
-	},
-	skupage:function(id,page){
-		console.log('skupage id'+id+" page"+page);
-	},
-	action:function(){
-		console.log('action');
+var a={
+	name:'gaogao',
+	sex:1,
+	hobby:['code','computer','pingpang'],
+	say:function(){
+		alert('haha');
 	}
-});
-router.start();
+};
+alert(JSON.stringify(a));
+console.log(JSON.stringify(a));
 </script>
 </head>
 <body>
 	<input type="button" value="index" onclick="location.href='#index/10'"/>
 	<input type="button" value="page" onclick="location.href='#page/p11'"/>
-	<input type="button" value="skupage" onclick="location.href='#skupage/100/101?v=1'"/>
-	<input type="button" value="detail" onclick="location.href='#detail'"/>
-	<input type="button" value="cart" onclick="location.href='#cart/200'"/>
 	<input type="button" value="else" onclick="location.href='#else'"/>
 </body>
 </html>

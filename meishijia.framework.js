@@ -1,25 +1,58 @@
 //依赖arttemplate
 ;(function(){
+	if(typeof meishijia === "undefined") meishijia={};
+	if(typeof meishijia.db === "undefined") meishijia.db={};
+	if(typeof meishijia.view === "undefined") meishijia.page={};
+
+
 	//需要渲染的div的id
-	meishijia.page.renderId = "page";
-	//上一个页面。用途：执行本次页面init需要销毁上一个页面
-	meishijia.page._previous = null;
+	meishijia.view.renderId = "page";
 	//根据模板和json数据 生成html  
 	//tplName 模板名称 data 数据
 	//可以在这里设置 默认的数据
-	meishijia.page.createHtml = function(tplName,data){
+	meishijia.view.createHtml = function(tplName,data){
 		data = data || {};
 		var html = template(tplName, data);
 		return html;
 	}
 
 	//tplName 模板名称 data 数据 animateType 转场类型
-	meishijia.page.render = function(tplName,data){
+	meishijia.view.render = function(tplName,data){
 		if(!tplName){return};
 		var html = meishijia.page.createHtml(tplName,data);
 		var renderDom = $("#"+meishijia.page.renderId);
 		renderDom.html(html);
 	};
+
+	meishijia.page.cache = {
+		html:'',
+		disposeTime:'',
+		scrollTop:0
+	}
+
+	meishijia.page = function(opt){
+		_extend(this,opt);
+		//调度器调用base方法
+		this.baseInit = function(timestamp){
+			//检查是否有缓存
+			if(sessionStorage[timestamp]){
+				this.baseResume();
+			}
+			else{
+				this.init();
+			}
+		}
+		this.baseResume = function(){
+			//恢复
+			this.resume();
+			this.bindEvent();
+		}
+		this.baseDispose = function(){
+			//添加或更新缓存
+
+			this.dispose();
+		}
+	}
 
 	/*
 	路由，用法：
@@ -66,7 +99,7 @@
 					//页面对象
 					var currentPage = meishijia.page[pageName];
 					if(currentPage){
-						if(typeof currentPage[init] === "function"){
+						if(typeof currentPage['init'] === "function"){
 							console.log(pageName+' not have init method');
 						}
 						else{
@@ -75,7 +108,7 @@
 								&& typeof meishijia.page._previous['dispose'] === "function"){
 								meishijia.page._previous['dispose'].call(meishijia.page._previous);
 							}
-							currentPage[init].apply(currentPage,args);
+							currentPage['init'].apply(currentPage,args);
 							meishijia.page._previous = currentPage;
 						}
 					}
