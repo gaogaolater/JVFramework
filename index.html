@@ -7,7 +7,7 @@
 h1{height:200px;border:1px solid gray;}
 </style>
 <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
-<script src="meishijia.framework.js"></script>
+<script src="meishijia.front.js"></script>
 <script>
 meishijia.view.index = new meishijia.page({
 	init:function(){
@@ -60,9 +60,10 @@ meishijia.view.list = new meishijia.page({
 });
 
 meishijia.view.detail = new meishijia.page({
-	init:function(){
-		this.name = 'detail';
+	init:function(id,name,param){
 		console.log('init');
+		console.log("id"+id+ " name"+name+" param"+param);
+		this.name = 'detail';
 		this.render();
 	},
 	render:function(){
@@ -76,8 +77,9 @@ meishijia.view.detail = new meishijia.page({
 			console.log('h1');
 		});
 	},
-	resume:function(){
+	resume:function(id,name,param){
 		console.log('resume');
+		console.log("id"+id+ " name"+name+" param"+param);
 	},
 	dispose:function(){
 		console.log('dispose');
@@ -101,7 +103,7 @@ $(function(){
 		routes:{
 			"index":"index",
 			"list":"list",
-			"detail":"detail",
+			"detail/:id/:name":"detail",
 			"*action":"action"
 		}
 	});
@@ -113,7 +115,7 @@ $(function(){
 	<div style="width:100%;height:30px;position:fixed;top:0;">
 		<button onclick="javascript:location.href='#index'" id="index">index</button>
 		<button onclick="javascript:location.href='#list'" id="list">list</button>
-		<button onclick="javascript:location.href='#detail'" id="detail">detail</button>
+		<button onclick="javascript:location.href='#detail/2/ice'" id="detail">detail</button>
 	</div>
 	<div id="page">
 		

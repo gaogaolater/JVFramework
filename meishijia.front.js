@@ -1,7 +1,6 @@
-//依赖arttemplate
+//依赖arttemplate jquery
 ;(function(){
 	if(typeof meishijia === "undefined") meishijia={};
-	if(typeof meishijia.db === "undefined") meishijia.db={};
 	if(typeof meishijia.view === "undefined") meishijia.view={};
 
 	//需要渲染的div的id
@@ -13,14 +12,13 @@
 		data = data || {};
 		var html = template(tplName, data);
 		return html;
-	}
+	};
 
 	//tplName 模板名称 data 数据 animateType 转场类型
 	meishijia.view.render = function(tplName,data){
 		if(!tplName){return};
 		var html = meishijia.page.createHtml(tplName,data);
-		var renderDom = $("#"+meishijia.page.renderId);
-		renderDom.html(html);
+		$("#"+meishijia.page.renderId).html(html);
 	};
 
 	/*
@@ -33,25 +31,31 @@
 	}
 	*/
 
+	//页面基类
 	meishijia.page = function(opt){
 		_extend(this,opt);
 		this._cache = null;
 		this._cacheKey = "";
+		this.disposeTime = 0;
 		//调度器调用base方法
 		this._baseInit = function(){
-			console.log(this);
 			this._cacheKey = location.hash || location.href;
 			//检查是否有缓存
 			this._cache = sessionStorage[this._cacheKey];
 			if(this._cache){
 				this._cache = JSON.parse(this._cache);
 				this._cache.instance = JSON.parse(this._cache.instance);
-				this._baseResume();
+				this._baseResume.apply(this,arguments);
 			}
 			else{
-				this.init();
+				if(typeof this.init === "function"){
+					this.init.apply(this,arguments);
+				}
+				else{
+					console.log("no init method");
+				}
 			}
-		}
+		};
 		this._baseResume = function(){
 			//恢复
 			var cache = this._cache;
@@ -61,9 +65,15 @@
 			for(var key in cache.instance){
 				this[key] = cache.instance[key];
 			}
-			this.resume(cache.disposeTime);
-			this.bindEvent();
-		}
+			this.disposeTime = cache.disposeTime;
+			this.resume.apply(this,arguments);
+			if(typeof this.bindEvent === "function"){
+				this.bindEvent();
+			}
+			else{
+				console.log("no bindEvent method");
+			}
+		};
 		this._baseDispose = function(){
 			//添加或更新缓存
 			var cache = {
@@ -73,9 +83,14 @@
 				instance:JSON.stringify(this)
 			}
 			sessionStorage[this._cacheKey] = JSON.stringify(cache);
-			this.dispose();
-		}
-	}
+			if(typeof this.dispose === "function"){
+				this.dispose();
+			}
+			else{
+				console.log("no dispose method");
+			}
+		};
+	};
 
 	/*
 	路由，用法：
@@ -145,7 +160,7 @@
 				console.log('no router matches');
 			}
 		}
-    }
+    };
 	
 	
 	var optionalParam = /\((.*?)\)/g;
@@ -161,13 +176,13 @@
                    })
                    .replace(splatParam, '([^?]*?)');
       return new RegExp('^' + route + '(?:\\?([\\s\\S]*))?$');
-    }
+    };
 
     var _extend = function(self,sup){
     	for(var item in sup){
     		self[item] = sup[item];
     	}
-    }
+    };
 
     var _getParam = function(name) {
 		var hash = location.hash.substr(location.hash.indexOf('?'))
@@ -177,6 +192,6 @@
 			return unescape(r[2]);
 		}
 		return "";
-	}
+	};
 
 })();
